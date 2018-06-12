@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 快速入门，配置UserDao实现类的 -->
+	<bean id="userDaoIm" class="com.itheima.springQuick.UserDaoImpl">
+		<property name="username" value="boniu" />
+	</bean>
+
+	<!-- 创建对象方式一 构造方法 -->
+	<!--作用域 scope="prototype" 多例，每次取出的值不一样 -->
+	<!--作用域 scope="singleton" 单例，每次取出的值一样 默认值 -->
+	<bean id="userBean1" class="com.itheima.spring.demo1.UserBean1"
+		init-method="initMethod" destroy-method="destoryMethod"></bean>
+
+	<!-- 创建对象方式二 静态工厂 -->
+	<bean id="userBean2" class="com.itheima.spring.demo1.UserBean2Factory"
+		factory-method="creatUserBean2"></bean>
+
+	<!-- 创建对象方式二 实例工厂 -->
+	<bean id="userBean3Factory" class="com.itheima.spring.demo1.UserBean3Factory"></bean>
+	<bean id="userBean3" class="com.itheima.spring.demo1.UserBean3"
+		factory-bean="userBean3Factory" factory-method="creatUserBean3"></bean>
+
+
+	<!-- 使用set方法赋值 -->
+	<!-- 基本类型 -->
+	<!-- ref 引用 -->
+	<bean id="userBaseSet" class="com.itheima.spring.demo2.User">
+		<property name="username" value="二萌"></property>
+		<property name="sex" value="你猜"></property>
+
+		<!-- <property name="age" value="18"></property> -->
+		<!-- #{myDog.age+20} SPEL表达式 -->
+		<!-- <property name="age" value="#{myDog.age+20}"></property> -->
+		<property name="age" value="#{myDog.getAge()+20}"></property>
+
+		<property name="birthday" ref="myDate"></property>
+		<!-- <property name="dog" ref="myDog"></property> -->
+		<property name="dog" value="#{myDog}"></property>
+	</bean>
+
+	<bean id="myDate" class="java.util.Date"></bean>
+
+	<bean id="myDog" class="com.itheima.spring.demo2.Dog">
+		<property name="name" value="呆呆"></property>
+		<property name="color" value="白色"></property>
+		<property name="age" value="2"></property>
+	</bean>
+
+	<!-- 使用构造方法赋值 -->
+	<bean id="studentConst" class="com.itheima.spring.demo2.Student">
+		<constructor-arg name="name" value="小明"></constructor-arg>
+		<constructor-arg name="age" value="18"></constructor-arg>
+		<constructor-arg name="brithday" ref="myDate"></constructor-arg>
+	</bean>
+	<!-- index 属性 -->
+	<bean id="studentConst2" class="com.itheima.spring.demo2.Student">
+		<constructor-arg index="0" value="小明"></constructor-arg>
+		<constructor-arg index="1" value="18"></constructor-arg>
+		<constructor-arg index="2" ref="myDate"></constructor-arg>
+	</bean>
+	<!-- Student javaBean中加入dog属性 -->
+	<bean id="studentAndDogConst" class="com.itheima.spring.demo2.Student">
+		<constructor-arg name="name" value="小哼"></constructor-arg>
+		<constructor-arg name="age" value="18"></constructor-arg>
+		<constructor-arg name="brithday" ref="myDate"></constructor-arg>
+		<constructor-arg name="dog" ref="hisDog"></constructor-arg>
+	</bean>
+	<bean id="hisDog" class="com.itheima.spring.demo2.Dog">
+		<constructor-arg name="name" value="呵呵"></constructor-arg>
+		<constructor-arg name="color" value="白色"></constructor-arg>
+		<constructor-arg name="age" value="1"></constructor-arg>
+	</bean>
+
+	<!-- 集合属性赋值 -->
+	<bean id="connectProperty" class="com.itheima.spring.demo4.ConnectProperty">
+		<!-- 配置list -->
+		<property name="list">
+			<list>
+				<value>张三</value>
+				<value type="int">18</value>
+				<ref bean="myDog" />
+			</list>
+		</property>
+		<!-- 配置map -->
+		<property name="map">
+			<map>
+				<entry key="zhangsan" value="18" />
+				<entry key="lisi" value-ref="myDog" />
+				<entry key-ref="myDate" value="18" />
+				<entry key-ref="myDate" value-ref="myDog" />
+
+			</map>
+		</property>
+		<!-- 配置set -->
+		<property name="set">
+			<set>
+				<value>李四</value>
+				<value type="int">20</value>
+				<ref bean="myDog" />
+				<ref bean="myDate" />
+			</set>
+		</property>
+		<!-- 配置Properties -->
+		<property name="props">
+			<props>
+			   <prop key="张三">20</prop>
+			   <prop key="李四">18</prop>
+			   <prop key="地址">黑马</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

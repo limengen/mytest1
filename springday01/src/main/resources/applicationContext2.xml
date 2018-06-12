@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- P名称空间：主要是用来简化set方法的属性赋值 -->
+	<bean id="userP" class="com.itheima.spring.demo3.User" p:username="P空间"
+		p:sex="你猜" p:age="18" p:birthday-ref="myDate" p:dog-ref="hisDog"></bean>
+	<bean id="myDate" class="java.util.Date"></bean>
+	<bean id="hisDog" class="com.itheima.spring.demo3.Dog" p:name="ha"
+		p:color="白" p:age="2"></bean>
+
+
+
+	<!-- C名称空间：主要是用来简化通过构造方法来进行属性赋值 -->
+	<bean id="studentC" class="com.itheima.spring.demo3.Student"
+		c:name="学生C" c:age="20" c:brithday-ref="myDate" c:dog-ref="hisDog"></bean>
+</beans>

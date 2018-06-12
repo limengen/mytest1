@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>springday01</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	
+	
+	<!-- 配置spring配置文件 -->
+	<!-- contextConfigLocation参数名 -->
+	<!-- ctrl+shift+t 搜索 ContextLoaderListener extends ContextLoader -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<!-- 配置监听器 org.springframework.web.context.ContextLoaderListener -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+
+	<servlet>
+		<description></description>
+		<display-name>SpringWebServlet</display-name>
+		<servlet-name>SpringWebServlet</servlet-name>
+		<servlet-class>com.itheima.spring.demo5.SpringWebServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SpringWebServlet</servlet-name>
+		<url-pattern>/SpringWebServlet</url-pattern>
+	</servlet-mapping>
+</web-app>
