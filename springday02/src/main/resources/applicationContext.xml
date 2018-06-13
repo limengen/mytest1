@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="personService" class="com.itheima.spring.demo01.PersonServiceImpl"></bean>
+	<bean id="personServiceProxy" class="com.itheima.spring.demo01.PersonServiceProxy"></bean>
+
+	<aop:config>
+		<aop:pointcut expression="execution(* com.itheima.spring.demo01.*.save*(..))"
+			id="savePointCut" />
+		<aop:pointcut expression="execution(* com.itheima.spring.demo01.*.delete*(..))"
+			id="deletePointCut" />
+		<aop:pointcut expression="execution(* com.itheima.spring.demo01.*.update*(..))"
+			id="updatePointCut" />
+		<aop:pointcut expression="execution(* com.itheima.spring.demo01.*.query*(..))"
+			id="queryPointCut" />
+		<aop:pointcut expression="execution(* com.itheima.spring.demo01.*.batch*(..))"
+			id="batchPointCut" />
+
+
+		<aop:aspect ref="personServiceProxy">
+			<aop:before method="saveProxy" pointcut-ref="savePointCut" />
+			<aop:after-returning method="deleteProxy"
+				pointcut-ref="deletePointCut" returning="obj"/>
+			<aop:around method="updateProxy" pointcut-ref="updatePointCut" />
+			<aop:after-throwing method="queryProxy" pointcut-ref="queryPointCut" throwing="th"/>
+			<aop:after method="batchProxy" pointcut-ref="batchPointCut"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>
